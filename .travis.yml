@@ -6,7 +6,10 @@ perl:
     - "5.16"
     - "5.14"
     - "5.12"
-
+    - "5.10"
+    - "5.8"
+env:
+  - "LONG_TESTS=1 TEST_SQLITE=1"
 install:
   - "cpanm -n Test::More Test::Deep Test::Exception Test::Warn"
   - "cpanm -n DBD::SQLite"
