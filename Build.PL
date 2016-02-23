@@ -79,13 +79,21 @@ my $build = Module::Build->subclass(
     },
 );
 
-if ( $build->y_n( "Run the long-running tests", 'n' ) ) {
+if ($ENV{LONG_TESTS}) {
     $build->notes( 'LONG_TESTS' => 1 );
+} else {
+    if ( $build->y_n( "Run the long-running tests", 'n' ) ) {
+        $build->notes( 'LONG_TESTS' => 1 );
+    }
 }
 
-if ( $build->features( 'sqlite_engine' ) ) {
-    if ( $build->y_n( "Run the tests against the DBI engine via SQLite?", 'n' ) ) {
-        $build->notes( 'TEST_SQLITE' => 1 );
+if ($ENV{TEST_SQLITE}) {
+    $build->notes( 'TEST_SQLITE' => 1 );
+} else {
+    if ( $build->features( 'sqlite_engine' ) ) {
+        if ( $build->y_n( "Run the tests against the DBI engine via SQLite?", 'n' ) ) {
+            $build->notes( 'TEST_SQLITE' => 1 );
+        }
     }
 }
 
