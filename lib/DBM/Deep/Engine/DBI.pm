@@ -284,6 +284,24 @@ sub write_value {
     return 1;
 }
 
+sub begin_work {
+    my $self = shift;
+
+    DBM::Deep->_throw_error( 'Cannot begin_work unless transactions are supported' );
+}
+
+sub rollback {
+    my $self = shift;
+
+    DBM::Deep->_throw_error( 'Cannot rollback unless transactions are supported' );
+}
+
+sub commit {
+    my $self = shift;
+
+    DBM::Deep->_throw_error( 'Cannot commit unless transactions are supported');
+}
+
 #sub begin_work {
 #    my $self = shift;
 #    die "Transactions are not supported by this engine"

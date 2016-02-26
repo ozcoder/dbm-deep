@@ -27,9 +27,11 @@ while ( my $dbm_maker = $dbm_factory->() ) {
         $db1->commit;
     } qr/Cannot commit unless transactions are supported/, "Attempting to commit without a transactions supported throws an error";
 
-    warning_like {
-        $dbm_maker->(num_txns => 2);
-    } qr/num_txns \(2\) is different from the file \(1\)/, "Opening a file with a different num_txns throws a warnings";
+    if (exists $db1->_get_self()->{engine}{num_txns}) {
+        warning_like {
+            $dbm_maker->(num_txns => 2);
+        } qr/num_txns \(2\) is different from the file \(1\)/, "Opening a file with a different num_txns throws a warnings";
+    }
 }
 
 done_testing
